@@ -1,0 +1,60 @@
+@startuml Amigyo-class
+
+namespace Amigyo {
+
+    namespace Input {
+        interface IInputProvider {
+            Angle: ReactiveProperty<float>
+            IsPressed: ReactiveProperty<bool>
+            Listen(): bool
+            Dispose(): void
+        }
+        note left
+        AngleはX軸から反時計回りを
+        正の向きとするdegreeで返す。
+        end note
+
+        IInputProvider <|.. 入力実装
+        IInputProvider <|.. スタブ
+    }
+
+    namespace Fish{
+        class Spawner{
+
+        }
+        abstract class Fish
+
+        Spawner --> Fish : 生成
+    }
+
+    class GameManager
+
+    namespace Events{
+
+        class Timer{
+
+        }
+        note bottom : 残り時間の表示
+
+        class Score{
+
+        }
+        note bottom : スコア表示
+    }
+
+    namespace Ship{
+        class Shooter{
+
+        }
+        class Net
+
+        Shooter --> Net : 発射
+    }
+
+    GameManager -- Amigyo.Events.Timer : 時間を送る
+    GameManager -- Amigyo.Events.Score : スコアを送る
+    GameManager --> Amigyo.Fish.Spawner : 生成パターン変更
+    Amigyo.Ship.Net --> GameManager : 捕獲した魚のデータ
+    Amigyo.Input.IInputProvider --> Amigyo.Ship.Shooter : 入力データ
+}
+@enduml
