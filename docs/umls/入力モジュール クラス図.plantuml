@@ -1,0 +1,28 @@
+@startuml "Amigyo.Input"
+
+namespace System {
+    interface IDisposable {
+        Dispose(): void
+    }
+}
+
+namespace Amigyo {
+    namespace Input {
+        interface IInputProvider {
+            Angle: ReactiveProperty<float>
+            IsPressed: ReactiveProperty<bool>
+            Listen(): bool
+            Dispose(): void
+        }
+        note left
+        AngleはX軸から反時計回りを
+        正の向きとするdegreeで返す。
+        end note
+    }
+}
+
+Amigyo.Input.IInputProvider ..|> System.IDisposable
+Amigyo.Input.IInputProvider <|.. Amigyo.Input.入力実装
+Amigyo.Input.IInputProvider <|.. Amigyo.Input.スタブ
+
+@enduml
