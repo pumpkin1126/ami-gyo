@@ -1,4 +1,4 @@
-@startuml
+@startuml Amigyo-class
 
 namespace Amigyo {
 
@@ -27,8 +27,9 @@ namespace Amigyo {
         Spawner --> Fish : 生成
     }
 
+    class GameManager
+
     namespace Events{
-        class GameManager
 
         class Timer{
 
@@ -39,9 +40,6 @@ namespace Amigyo {
 
         }
         note bottom : スコア表示
-
-        GameManager -- Timer : 時間を送る
-        GameManager -- Score : スコアを送る
     }
 
     namespace Ship{
@@ -53,8 +51,10 @@ namespace Amigyo {
         Shooter --> Net : 発射
     }
 
-    Amigyo.Events.GameManager --> Amigyo.Fish.Spawner : 生成パターン変更
-    Amigyo.Ship.Net --> Amigyo.Events.GameManager : 捕獲した魚のデータ
+    GameManager -- Amigyo.Events.Timer : 時間を送る
+    GameManager -- Amigyo.Events.Score : スコアを送る
+    GameManager --> Amigyo.Fish.Spawner : 生成パターン変更
+    Amigyo.Ship.Net --> GameManager : 捕獲した魚のデータ
     Amigyo.Input.IInputProvider --> Amigyo.Ship.Shooter : 入力データ
 }
 @enduml
