@@ -44,7 +44,9 @@ namespace Amigyo {
     }
 
     class GameManager{
-        + CalculateScore(FishInfo)
+        + RemainingTime : int
+        + Score : int
+        + CalculateScore(FishInfo) : void
     }
 
     enum EventType{
@@ -75,8 +77,8 @@ namespace Amigyo {
         Shooter --> Net : 発射
     }
 
-    GameManager -- Amigyo.UI.Timer : 時間を送る
-    GameManager -- Amigyo.UI.Score : スコアを送る
+    GameManager --> Amigyo.UI.Timer : 時間を受け取る
+    GameManager --> Amigyo.UI.Score : スコアを受け取る
     GameManager --> Amigyo.Spawners.SpawnerHolder : 生成パターン変更
     Amigyo.Ship.Net --> GameManager : 捕獲した魚のデータ
     Amigyo.Input.IInputProvider --> Amigyo.Ship.Shooter : 入力データ
