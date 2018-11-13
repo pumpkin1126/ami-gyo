@@ -25,9 +25,26 @@ namespace Amigyo {
         abstract class Fish
 
         Spawner --> Fish : 生成
+
+        class Fish{
+            + Info : FishInfo
+        }
     }
 
-    class GameManager
+    class GameManager{
+        + CalculateScore(FishInfo)
+    }
+
+    class FishInfo{
+        + Weight : int
+        + BonusTime : int
+        + EventName : EventType
+    }
+
+    enum EventType{
+        None
+        MassGeneration
+    }
 
     namespace Events{
 
