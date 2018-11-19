@@ -18,18 +18,44 @@ namespace Amigyo {
         IInputProvider <|.. スタブ
     }
 
-    namespace Fish{
-        class Spawner{
+    namespace Spawners{
+        class SpawnerHolder{
+            - spawner : Spawner
+            + changeSpawner(EventType)
+        }
+
+        abstract class Spawner{
 
         }
-        abstract class Fish
 
-        Spawner --> Fish : 生成
+        SpawnerHolder -> Spawner
     }
 
-    class GameManager
+    namespace Fishs{
+        class FishInfo{
+            + Weight : int
+            + BonusTime : int
+            + EventName : EventType
+        }
 
-    namespace Events{
+        abstract class Fish{
+            + Info : FishInfo
+        }
+    }
+
+    class GameManager{
+        + RemainingTime : int
+        + Score : int
+        + CalculateScore(FishInfo) : void
+    }
+
+    enum EventType{
+        None
+        MassGeneration
+        StrongFish
+    }
+
+    namespace UI{
 
         class Timer{
 
@@ -51,10 +77,12 @@ namespace Amigyo {
         Shooter --> Net : 発射
     }
 
-    GameManager -- Amigyo.Events.Timer : 時間を送る
-    GameManager -- Amigyo.Events.Score : スコアを送る
-    GameManager --> Amigyo.Fish.Spawner : 生成パターン変更
+    GameManager --> Amigyo.UI.Timer : 時間を受け取る
+    GameManager --> Amigyo.UI.Score : スコアを受け取る
+    GameManager --> Amigyo.Spawners.SpawnerHolder : 生成パターン変更
     Amigyo.Ship.Net --> GameManager : 捕獲した魚のデータ
     Amigyo.Input.IInputProvider --> Amigyo.Ship.Shooter : 入力データ
+    Amigyo.Spawners.Spawner --> Amigyo.Fishs.Fish : 生成
+    Amigyo.Fishs.Fish - Amigyo.Fishs.FishInfo
 }
 @enduml
