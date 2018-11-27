@@ -1,19 +1,18 @@
 ﻿using System;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 namespace Amigyo.Input
 {
     public sealed class MouseInputProvider : IInputProvider
     {
-        private readonly BooleanDisposable booleanDisposable = new BooleanDisposable();
-
         private readonly CompositeDisposable disposable = new CompositeDisposable();
 
         private readonly Subject<float> angleSubject = new Subject<float>();
 
         private readonly Subject<bool> isPressedSubject = new Subject<bool>();
+
+        private bool canListen = true;
 
         public ReadOnlyReactiveProperty<float> Angle { get; private set; }
 
@@ -24,13 +23,12 @@ namespace Amigyo.Input
             //  プロパティの生成自体は先にやっておく。
             this.Angle = this.angleSubject.ToReadOnlyReactiveProperty().AddTo(this.disposable);
             this.IsPressed = this.isPressedSubject.ToReadOnlyReactiveProperty().AddTo(this.disposable);
-            this.booleanDisposable.AddTo(this.disposable);
         }
 
         public bool Listen()
         {
             //  再びListenはできないようにする。
-            if (this.booleanDisposable.IsDisposed) return false;
+            if (!this.canListen) return false;
 
             //  Listenされたら発火用のSubjectを購読する。
             //  Listenを呼ぶ前から購読できるようにするため。
@@ -46,6 +44,7 @@ namespace Amigyo.Input
                 .Subscribe(flag => this.isPressedSubject.OnNext(flag))
                 .AddTo(this.disposable);
 
+            this.canListen = false;
             return true;
         }
 
