@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Fish{
-	public class FishInfo : MonoBehaviour {
+	public class FishInfo{
 
 		int weight;
 		int bonusTime;
