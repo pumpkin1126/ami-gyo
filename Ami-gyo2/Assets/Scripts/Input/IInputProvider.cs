@@ -14,12 +14,12 @@ namespace Amigyo.Input
         /// アミの発射角度を表す角度を通知・保持します。
         /// 角度はX軸正向きを始線とする極座標の角度で、度数法表記の値です。
         /// </summary>
-        ReactiveProperty<float> Angle { get; }
+        ReadOnlyReactiveProperty<float> Angle { get; }
 
         /// <summary>
         /// ボタンが押されているかどうかを通知・保持します。
         /// </summary>
-        ReactiveProperty<bool> IsPressed { get; }
+        ReadOnlyReactiveProperty<bool> IsPressed { get; }
 
         /// <summary>
         /// 変更の通知を開始します。
