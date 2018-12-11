@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ce4d73be477674b8b9de90ef6186cf, type: 3}
+  m_Name: Spawner Link Settings
+  m_EditorClassIdentifier: 
+  fishList_Standard: {fileID: 11400000, guid: 5f38885e4a4334c489df4e0c9abc20ed, type: 2}
+  fishList_MassGeneration: {fileID: 0}
+  fishList_BigFish: {fileID: 0}
+  bigFish: {fileID: 0}
+  groupFish: {fileID: 0}
+  standardFish: {fileID: 1935524172021898, guid: 937f96bce4793714b96bfb833980f23b,
+    type: 2}
