@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Amigyo;
+using Amigyo.Fishes;
 
 public class Net : MonoBehaviour {
 
@@ -13,5 +15,14 @@ public class Net : MonoBehaviour {
 			Rigidbody rb = this.GetComponent<Rigidbody>();
 			rb.AddForce(transform.forward * 5, ForceMode.Impulse);
 		}
+	}
+
+	void OnCollisionEnter(Collision collision){
+		var Script = collision.gameObject.GetComponent<Fish>();
+		if(Script == null)
+			return;
+
+		GameManager.Instance.CalculateScore(Script.info);
+		Destroy(this.gameObject);
 	}
 }
