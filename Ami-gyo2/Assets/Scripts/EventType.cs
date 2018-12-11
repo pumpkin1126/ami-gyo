@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType{
-	None, MassGeneration, StrongFish
+namespace Amigyo{
+	public enum EventType{
+		None, MassGeneration, StrongFish
+	}
 }
