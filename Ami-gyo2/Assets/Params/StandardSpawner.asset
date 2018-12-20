@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7552564d095c5489e0c8d48b0caf2d, type: 3}
   m_Name: StandardSpawner
   m_EditorClassIdentifier: 
-  fishTypes: 000000000100000002000000
+  fishTypes: 02000000

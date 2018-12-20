@@ -8,11 +8,16 @@ namespace Amigyo{
 
 		public abstract class Spawner{
 
-			protected IReadOnlyList<GameObject> fishPrefabs;
-			public GameParams gameParams;
+			protected Dictionary<FishEnum, GameObject> fishPrefabs;
+			protected GameObject area;
+			protected GameParams gameParams;
+			protected SpawnerInfo info;
 
-			public void SetUp(List<GameObject> prefabs){
+			public void SetUp(Dictionary<FishEnum, GameObject> prefabs, GameObject area, GameParams gameParams, SpawnerInfo info){
 				fishPrefabs = prefabs;
+				this.area = area;
+				this.gameParams = gameParams;
+				this.info = info;
 			}
 
 			public abstract void Activate();

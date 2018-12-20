@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: GameParams
   m_EditorClassIdentifier: 
   timeLimit: 60
+  maxAmount_standardFish: 5

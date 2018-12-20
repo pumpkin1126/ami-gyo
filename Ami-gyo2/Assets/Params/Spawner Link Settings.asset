@@ -16,5 +16,5 @@ MonoBehaviour:
   fishList_BigFish: {fileID: 0}
   bigFish: {fileID: 0}
   groupFish: {fileID: 0}
-  standardFish: {fileID: 1935524172021898, guid: 937f96bce4793714b96bfb833980f23b,
+  standardFish: {fileID: 1976954640319264, guid: 702e882b78569d04599b2bd542d6fbaf,
     type: 2}

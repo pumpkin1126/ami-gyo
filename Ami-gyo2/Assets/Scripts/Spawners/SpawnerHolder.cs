@@ -9,8 +9,9 @@ namespace Amigyo{
 	namespace Spawners{
 		public class SpawnerHolder : MonoBehaviour {
 
-			public SpawnerLinkSettings links;
 			public GameParams gameParams;
+			public SpawnerLinkSettings links;
+			public GameObject Area;
 
 			Dictionary<EventType, Spawner> spawners;
 			//Dictionary<FishEnum, GameObject> prefabs;
@@ -25,11 +26,12 @@ namespace Amigyo{
 				var prefabs = links.GetFishPrefabs();
 
 				foreach(var pair in spawners){
-					var fishTypes = links.GetSpawnerInfo(pair.Key).FishTypes;
-					var selectedPrefabs = fishTypes.Select(type => prefabs[type]).ToList();
-					
-					pair.Value.SetUp(selectedPrefabs);
-					pair.Value.gameParams = gameParams;
+					var info = links.GetSpawnerInfo(pair.Key);
+					var fishTypes = info.FishTypes;
+					//var selectedPrefabs = fishTypes.Select(type => prefabs[type]).ToList();
+					var selectedPrefabs = fishTypes.ToDictionary(type => type, type => prefabs[type]);
+
+					pair.Value.SetUp(selectedPrefabs, Area, gameParams, info);
 				}
 
 				ChangeSpawner(EventType.None);
