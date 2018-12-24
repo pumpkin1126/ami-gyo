@@ -39,14 +39,14 @@ namespace Amigyo{
 				var collider = area.GetComponent<BoxCollider>();
 				Range = collider.bounds.size;
 
-				Debug.LogWarning("Activate");
+				//Debug.LogWarning("Activate");
 
 				//生成タイミングは3秒おき（種類ごとにオフセットはランダム）
 				foreach(var pair in fishPrefabs){
 					Observable.Timer(System.TimeSpan.FromSeconds(Random.value*5)).Take(1).Subscribe(_ => {
-						Debug.LogWarning("Timer Set");
+						//Debug.LogWarning("Timer Set");
 						disposables.Add(Observable.Interval(System.TimeSpan.FromSeconds(3f)).Subscribe(__ => {
-							Debug.LogWarning("Create timing");
+							//Debug.LogWarning("Create timing");
 							if(isSpawable(pair.Key))
 								Instantiate(pair.Key);
 						}));
@@ -56,11 +56,13 @@ namespace Amigyo{
 			
 			public override void Update () {
 				//特に何も書くことなかった
+				/*
 				string s = "";
 				foreach(var pair in fishCounts)
 					s += pair + "    ";
 
 				Debug.Log(s);
+				*/
 			}
 
 			
