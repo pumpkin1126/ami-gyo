@@ -56,13 +56,13 @@ namespace Amigyo{
 			
 			public override void Update () {
 				//特に何も書くことなかった
-				/*
+				
 				string s = "";
 				foreach(var pair in fishCounts)
 					s += pair + "    ";
 
 				Debug.Log(s);
-				*/
+				
 			}
 
 			
@@ -86,7 +86,10 @@ namespace Amigyo{
 
 				spawnPoint += area.transform.position;
 
-				GameObject.Instantiate(fishPrefabs[fishEnum], spawnPoint, Quaternion.identity);
+				var rotation = Quaternion.LookRotation(area.transform.position - spawnPoint);
+				var fishObj = GameObject.Instantiate(fishPrefabs[fishEnum], spawnPoint, rotation);
+				fishObj.GetComponent<Fish>().SetDecreaseCountMethod(DecreaseFishCount);
+				
 				fishCounts[fishEnum]++;
 			}
 
