@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 4428885491313686}
   - component: {fileID: 65836587268248952}
   - component: {fileID: 95763382635032842}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: walleye
   m_TagString: Untagged
   m_Icon: {fileID: 0}

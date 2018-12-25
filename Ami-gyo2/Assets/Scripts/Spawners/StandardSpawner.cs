@@ -57,12 +57,13 @@ namespace Amigyo{
 			public override void Update () {
 				//特に何も書くことなかった
 				
+				/*
 				string s = "";
 				foreach(var pair in fishCounts)
 					s += pair + "    ";
 
 				Debug.Log(s);
-				
+				*/
 			}
 
 			

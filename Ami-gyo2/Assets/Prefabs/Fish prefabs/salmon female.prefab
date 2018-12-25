@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 95570362092078874}
   - component: {fileID: 54820586640461538}
   - component: {fileID: 114552072416369076}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: salmon female
   m_TagString: Untagged
   m_Icon: {fileID: 0}

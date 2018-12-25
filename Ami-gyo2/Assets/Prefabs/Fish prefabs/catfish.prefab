@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 4081515861406798}
   - component: {fileID: 65154486445970778}
   - component: {fileID: 95824862450327132}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: catfish
   m_TagString: Untagged
   m_Icon: {fileID: 0}

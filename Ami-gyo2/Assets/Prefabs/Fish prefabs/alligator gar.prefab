@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 4408864642380376}
   - component: {fileID: 65087541875536450}
   - component: {fileID: 95548206326578852}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: alligator gar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

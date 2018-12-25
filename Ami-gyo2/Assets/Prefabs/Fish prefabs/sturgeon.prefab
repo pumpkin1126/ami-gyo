@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 95426918313527252}
   - component: {fileID: 205796797478040744}
   - component: {fileID: 65383765729519716}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: sturgeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 4111998744070970}
   - component: {fileID: 65944671641285074}
   - component: {fileID: 95329790499239460}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: snook
   m_TagString: Untagged
   m_Icon: {fileID: 0}

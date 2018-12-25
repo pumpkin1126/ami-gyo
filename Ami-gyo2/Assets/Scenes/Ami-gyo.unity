@@ -232,7 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 260013859}
   - component: {fileID: 260013858}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Area
   m_TagString: Area
   m_Icon: {fileID: 0}

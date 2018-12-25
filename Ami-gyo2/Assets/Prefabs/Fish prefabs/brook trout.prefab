@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4359272416993744}
   - component: {fileID: 65838187170624358}
   - component: {fileID: 95521638125036132}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: brook trout
   m_TagString: Untagged
   m_Icon: {fileID: 0}

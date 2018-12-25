@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 4729804475065200}
   - component: {fileID: 65906484596770380}
   - component: {fileID: 95261130798688042}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: trout
   m_TagString: Untagged
   m_Icon: {fileID: 0}

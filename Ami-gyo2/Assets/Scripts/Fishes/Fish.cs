@@ -32,10 +32,20 @@ namespace Amigyo{
 				decreaseFishCount = method;
 			}
 
+			void Die(){
+				decreaseFishCount(FishEnum.StandardFish);
+				Destroy(this.gameObject);
+			}
+
+			void OnCollisionEnter(Collision c){
+				if(c.gameObject.GetComponent<Net>() != null){
+					Die();
+				}
+			}
+
 			void OnTriggerExit(Collider c){
 				if(c.gameObject.tag == "Area"){
-					decreaseFishCount(FishEnum.StandardFish);
-					Destroy(this.gameObject);
+					Die();
 				}
 			}
 		}

@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 4578135484144116}
   - component: {fileID: 65305159072433564}
   - component: {fileID: 95448844434187230}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: longnose gar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

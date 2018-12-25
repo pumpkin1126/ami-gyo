@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 4606346634890086}
   - component: {fileID: 65598302660535470}
   - component: {fileID: 95963013990291676}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bass
   m_TagString: Untagged
   m_Icon: {fileID: 0}

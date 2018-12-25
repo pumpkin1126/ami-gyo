@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4251327917945780}
   - component: {fileID: 65057993700758962}
   - component: {fileID: 95757847042813388}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: salmon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
