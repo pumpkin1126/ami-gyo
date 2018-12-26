@@ -579,7 +579,7 @@ PlayerSettings:
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   apiCompatibilityLevelPerPlatform:
-    Standalone: 1
+    Standalone: 3
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Template_3D
@@ -653,7 +653,7 @@ PlayerSettings:
   apiCompatibilityLevel: 3
   cloudProjectId: 71503dc1-4d26-4498-a038-2d847aa24eb9
   projectName: Ami-gyo2 (1)
-  organizationId: shachi-f4d383d2-a191-4140-bf55-81f5715f9c55
+  organizationId: shachi-ee6b6d60-4ca7-46f8-9fee-f70cb08da2d5
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
