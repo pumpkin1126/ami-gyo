@@ -25,4 +25,8 @@ public class Net : MonoBehaviour {
 		GameManager.Instance.CalculateScore(Script.info);
 		Destroy(this.gameObject);
 	}
+
+	void OnTriggerExit(Collider c){
+		if(c.gameObject.tag == "Area")	Destroy(this.gameObject);
+	}
 }
