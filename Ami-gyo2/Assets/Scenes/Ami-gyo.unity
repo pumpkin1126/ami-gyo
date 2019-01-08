@@ -570,6 +570,21 @@ Prefab:
       value: 
       objectReference: {fileID: 1405165539944386, guid: 5fde195cbc6392642ac630464d75905a,
         type: 2}
+    - target: {fileID: 114174085757769560, guid: efffd26b78db46c4aa0ff20c456daf90,
+        type: 2}
+      propertyPath: portName
+      value: COM3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114174085757769560, guid: efffd26b78db46c4aa0ff20c456daf90,
+        type: 2}
+      propertyPath: baudRate
+      value: 9600
+      objectReference: {fileID: 0}
+    - target: {fileID: 114174085757769560, guid: efffd26b78db46c4aa0ff20c456daf90,
+        type: 2}
+      propertyPath: inputType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efffd26b78db46c4aa0ff20c456daf90, type: 2}
   m_IsPrefabAsset: 0

@@ -5,16 +5,37 @@ using UnityEngine;
 
 namespace Amigyo.Ship
 {
+    public enum InputType
+    {
+        MouseInput,
+        DeviceInput
+    }
+
     public class Shooter : MonoBehaviour
     {
         //  Zenjectにfield-injectionさせる。
-        private IInputProvider inputProvider = new MouseInputProvider();
+        private IInputProvider inputProvider;
 
         [SerializeField]
         private GameObject netPrefab;
 
+        [SerializeField]
+        private InputType inputType;
+
+        [SerializeField]
+        private string portName;
+
+        [SerializeField]
+        private int baudRate;
+
         private void Start()
         {
+            //  IInputProviderを自分でインジェクションする。
+            //  規模が小さいため、DIコンテナは使わない。
+            this.inputProvider = (this.inputType == InputType.DeviceInput && this.portName != null)
+                ? new DeviceInputProvider(this.portName, this.baudRate) as IInputProvider
+                : new MouseInputProvider() as IInputProvider;
+
             //  角度が変化したときの処理。
             this.inputProvider.Angle.Subscribe(this.OnAngleChanged).AddTo(this);
 
