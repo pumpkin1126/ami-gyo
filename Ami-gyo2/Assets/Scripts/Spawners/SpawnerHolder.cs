@@ -23,15 +23,16 @@ namespace Amigyo{
 					{EventType.None, new StandardSpawner()}
 				};
 
-				var prefabs = links.GetFishPrefabs();
+				//var prefabs = links.GetFishPrefabs();
 
 				foreach(var pair in spawners){
 					var info = links.GetSpawnerInfo(pair.Key);
+					/*
 					var fishTypes = info.FishTypes;
 					//var selectedPrefabs = fishTypes.Select(type => prefabs[type]).ToList();
 					var selectedPrefabs = fishTypes.ToDictionary(type => type, type => prefabs[type]);
-
-					pair.Value.SetUp(selectedPrefabs, Area, gameParams, info);
+					*/
+					pair.Value.SetUp(Area, gameParams, info);
 				}
 
 				ChangeSpawner(EventType.None);

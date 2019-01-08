@@ -9,10 +9,11 @@ namespace Amigyo{
 		public class SpawnerInfo : ScriptableObject {
 
 			[SerializeField]
-			private List<FishEnum> fishTypes;
+			private List<GameObject> fishPrefabs;
 
-			public IReadOnlyList<FishEnum> FishTypes{
-				get{	return fishTypes;	}
+
+			public IReadOnlyList<GameObject> FishPrefabs{
+				get{	return fishPrefabs;	}
 			}
 		}
 	}

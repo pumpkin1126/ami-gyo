@@ -39,11 +39,10 @@ namespace Amigyo {
 
         class SpawnerLinkSettings{
             + GetSpawnerInfo(EventType) : SpawnerInfo
-            + GetFishPrefabs() : Dictionary<FishEnum, GameObject> 
         }
 
         class SpawnerInfo{
-            + FishTypes : IReadOnlyList<FishEnum>
+            + FishPrefabs : IReadOnlyList<GameObject>
         }
 
         SpawnerHolder -> Spawner
@@ -58,20 +57,15 @@ namespace Amigyo {
             + Weight : int
             + BonusTime : int
             + EventName : EventType
+            + MaxAmount : int
+            + isBig     : bool
+            + isGroup   : bool
         }
 
         abstract class Fish{
             + Info : FishInfo
         }
-
-        enum FishEnum{
-            BigFish, GroupFish, StandardFish
-        }
-
-        Unity.ScriptableObject <|-- FishInfo
     }
-
-    
 
     class GameManager{
         + RemainingTime : int

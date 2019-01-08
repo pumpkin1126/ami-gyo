@@ -477,7 +477,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc62c196c4da24489ddb956cdb36f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: {fileID: 11400000, guid: a6152fb6d8b204642b4d8afaa7ce9da6, type: 2}
+  info:
+    weight: 0
+    bonusSecond: 0
+    eventName: 0
+    maxAmount: 2
+    isBig: 0
+    isGroup: 0
   Speed: 10
   Scale: 4
 --- !u!137 &137055758942878908

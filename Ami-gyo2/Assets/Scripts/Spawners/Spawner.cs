@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Amigyo.Fishes;
 
 namespace Amigyo{
@@ -8,13 +9,13 @@ namespace Amigyo{
 
 		public abstract class Spawner{
 
-			protected Dictionary<FishEnum, GameObject> fishPrefabs;
+			protected IReadOnlyList<FishElement> fishElements;
 			protected GameObject area;
 			protected GameParams gameParams;
 			protected SpawnerInfo info;
 
-			public void SetUp(Dictionary<FishEnum, GameObject> prefabs, GameObject area, GameParams gameParams, SpawnerInfo info){
-				fishPrefabs = prefabs;
+			public void SetUp(GameObject area, GameParams gameParams, SpawnerInfo info){
+				fishElements = info.FishPrefabs.Select(prefab => new FishElement(prefab)).ToList();
 				this.area = area;
 				this.gameParams = gameParams;
 				this.info = info;
@@ -22,6 +23,16 @@ namespace Amigyo{
 
 			public abstract void Activate();
 			public abstract void Update();
+		}
+
+		public class FishElement{
+			public GameObject prefab;
+			public int existCount;
+
+			public FishElement(GameObject prefab){
+				this.prefab = prefab;
+				existCount = 0;
+			}
 		}
 	}
 }

@@ -11,4 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7552564d095c5489e0c8d48b0caf2d, type: 3}
   m_Name: StandardSpawner
   m_EditorClassIdentifier: 
-  fishTypes: 02000000
+  fishPrefabs:
+  - {fileID: 1361852580158066, guid: fcb74b1dd82c04f4bb445d450d5c53b7, type: 2}

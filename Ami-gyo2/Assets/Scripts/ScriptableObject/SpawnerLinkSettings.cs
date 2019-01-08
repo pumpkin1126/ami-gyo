@@ -15,11 +15,13 @@ namespace Amigyo{
 			[SerializeField] SpawnerInfo fishList_MassGeneration;
 			[SerializeField] SpawnerInfo fishList_BigFish;
 
+			/*
 			[Header("Fish Prefabs")]
 			[SerializeField] GameObject bigFish;
 			[SerializeField] GameObject groupFish;
 			[SerializeField] GameObject standardFish;
-			
+			*/
+
 			public SpawnerInfo GetSpawnerInfo(EventType type){
 				switch(type){
 					case EventType.None:			return fishList_Standard;
@@ -29,11 +31,14 @@ namespace Amigyo{
 				}
 			}
 
+			/*
 			public Dictionary<FishEnum, GameObject> GetFishPrefabs(){
 				return new Dictionary<FishEnum, GameObject>(){
 					{FishEnum.BigFish, bigFish}, {FishEnum.GroupFish, groupFish}, {FishEnum.StandardFish, standardFish},
 				};
 			}
+			*/
+
 
 		}
 	}

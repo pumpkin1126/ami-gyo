@@ -11,12 +11,11 @@ namespace Amigyo{
 		public class StandardSpawner : Spawner {
 
 			//@super Fields
-			//protected Dictionary<FishEnum, GameObject> fishPrefabs;
+			//protected IReadOnlyList<GameObject> fishElements;
 			//protected GameObject area;
 			//protected GameParams gameParams;
 			//protected SpawnerInfo info;
 
-			Dictionary<FishEnum, int> fishCounts;
 			List<System.IDisposable> disposables;
 
 			float marginFromArea;		//範囲の外枠から、この距離だけ離して生成
@@ -28,12 +27,6 @@ namespace Amigyo{
 
 				disposables = new List<System.IDisposable>();
 
-				//魚カウンターの初期化
-				fishCounts = new Dictionary<FishEnum, int>();
-				foreach(var enu in info.FishTypes){
-					fishCounts.Add((FishEnum)enu, 0);
-				}
-
 				//コライダーの読み取り
 				marginFromArea = 1f;
 				var collider = area.GetComponent<BoxCollider>();
@@ -42,13 +35,18 @@ namespace Amigyo{
 				//Debug.LogWarning("Activate");
 
 				//生成タイミングは3秒おき（種類ごとにオフセットはランダム）
-				foreach(var pair in fishPrefabs){
+
+				for(int i = 0; i < fishElements.Count; i++){
+					int index = i;		//iはforの最後で++されるため、isSpawableにそのまま使うとOutOfRangeする
+
 					Observable.Timer(System.TimeSpan.FromSeconds(Random.value*5)).Take(1).Subscribe(_ => {
 						//Debug.LogWarning("Timer Set");
+
 						disposables.Add(Observable.Interval(System.TimeSpan.FromSeconds(3f)).Subscribe(__ => {
 							//Debug.LogWarning("Create timing");
-							if(isSpawable(pair.Key))
-								Instantiate(pair.Key);
+							if(isSpawable(index)){
+								Instantiate(index);
+							}
 						}));
 					});
 				}
@@ -67,11 +65,11 @@ namespace Amigyo{
 			}
 
 			
-			bool isSpawable(FishEnum fishEnum){
-				return (gameParams.GetMaxAmount(fishEnum) > fishCounts[fishEnum]);
+			bool isSpawable(int index){
+				return (fishElements[index].prefab.GetComponent<Fish>().info.MaxAmount > fishElements[index].existCount);
 			}
 
-			void Instantiate(FishEnum fishEnum){
+			void Instantiate(int index){
 				int side = (int)(UnityEngine.Random.value * 3);
 
 				var spawnPoint = Vector3.zero;
@@ -88,14 +86,14 @@ namespace Amigyo{
 				spawnPoint += area.transform.position;
 
 				var rotation = Quaternion.LookRotation(area.transform.position - spawnPoint);
-				var fishObj = GameObject.Instantiate(fishPrefabs[fishEnum], spawnPoint, rotation);
-				fishObj.GetComponent<Fish>().SetDecreaseCountMethod(DecreaseFishCount);
+				var fishObj = GameObject.Instantiate(fishElements[index].prefab, spawnPoint, rotation);
+				fishObj.GetComponent<Fish>().SetIdAndDieMethod(index, DecreaseFishCount);
 				
-				fishCounts[fishEnum]++;
+				fishElements[index].existCount++;
 			}
 
-			public void DecreaseFishCount(FishEnum enu){
-				fishCounts[enu]--;
+			public void DecreaseFishCount(int index){
+				fishElements[index].existCount--;
 			}
 		}
 	}
