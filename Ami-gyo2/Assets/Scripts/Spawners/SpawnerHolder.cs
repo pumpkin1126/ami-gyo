@@ -20,7 +20,7 @@ namespace Amigyo{
 
 			void Start () {
 				spawners = new Dictionary<EventType, Spawner>(){
-					{EventType.None, new StandardSpawner()}
+					{EventType.Standard, new StandardSpawner()}
 				};
 
 				//var prefabs = links.GetFishPrefabs();
@@ -35,7 +35,7 @@ namespace Amigyo{
 					pair.Value.SetUp(Area, gameParams, info);
 				}
 
-				ChangeSpawner(EventType.None);
+				ChangeSpawner(EventType.Standard);
 			}
 			
 			void Update () {

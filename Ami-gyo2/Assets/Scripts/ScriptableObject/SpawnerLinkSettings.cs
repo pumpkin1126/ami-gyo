@@ -24,7 +24,7 @@ namespace Amigyo{
 
 			public SpawnerInfo GetSpawnerInfo(EventType type){
 				switch(type){
-					case EventType.None:			return fishList_Standard;
+					case EventType.Standard:			return fishList_Standard;
 					case EventType.MassGeneration:	return fishList_MassGeneration;
 					case EventType.StrongFish:		return fishList_BigFish;
 					default: throw new NullReferenceException();

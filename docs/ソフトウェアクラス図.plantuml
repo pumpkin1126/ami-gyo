@@ -75,6 +75,7 @@ namespace Amigyo {
 
     enum EventType{
         None
+        Standard
         MassGeneration
         StrongFish
     }
