@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Name: Spawner Link Settings
   m_EditorClassIdentifier: 
   fishList_Standard: {fileID: 11400000, guid: 5f38885e4a4334c489df4e0c9abc20ed, type: 2}
-  fishList_MassGeneration: {fileID: 0}
-  fishList_BigFish: {fileID: 0}
-  bigFish: {fileID: 0}
-  groupFish: {fileID: 0}
-  standardFish: {fileID: 1361852580158066, guid: fcb74b1dd82c04f4bb445d450d5c53b7,
+  fishList_MassGeneration: {fileID: 11400000, guid: 29895ab36b2ef8545ab2a05bbe5068c3,
     type: 2}
+  fishList_BigFish: {fileID: 11400000, guid: ccabd3c3bb561454592c4e46ea11ae0f, type: 2}

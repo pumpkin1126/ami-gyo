@@ -4,6 +4,6 @@ using UnityEngine;
 
 namespace Amigyo{
 	public enum EventType{
-		None, MassGeneration, StrongFish
+		None, Standard, MassGeneration, StrongFish
 	}
 }

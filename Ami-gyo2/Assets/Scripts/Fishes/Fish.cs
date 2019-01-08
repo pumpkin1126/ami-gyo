@@ -8,11 +8,14 @@ namespace Amigyo{
 		[RequireComponent(typeof(Rigidbody))]
 		public class Fish : MonoBehaviour {
 			
-			public FishInfo info;
+			[SerializeField] public FishInfo info;
 			public float Speed;
 			public float Scale = 1;
+			
+			int id;
+			public int Id{ get{return id;}}
 
-			Action<FishEnum> decreaseFishCount;
+			Action<int> decreaseFishCount;
 			Rigidbody rigid;
 
 			void Start () {
@@ -28,12 +31,13 @@ namespace Amigyo{
 				
 			}
 
-			public void SetDecreaseCountMethod(Action<FishEnum> method){
+			public void SetIdAndDieMethod(int id, Action<int> method){
+				this.id = id;
 				decreaseFishCount = method;
 			}
 
 			void Die(){
-				decreaseFishCount(FishEnum.StandardFish);
+				decreaseFishCount(id);
 				Destroy(this.gameObject);
 			}
 
@@ -50,8 +54,21 @@ namespace Amigyo{
 			}
 		}
 
-		public enum FishEnum{
-			BigFish, GroupFish, StandardFish
+		[Serializable]
+		public class FishInfo{
+			[SerializeField] int weight;
+			[SerializeField] int bonusSecond;
+			[SerializeField] EventType eventName;
+			[SerializeField] int maxAmount;
+			[SerializeField] bool isBig = false, isGroup = false;
+
+			public int Weight{ get{return weight;} }
+			public int BonusSecond{ get{return bonusSecond;} }
+			public EventType EventName{ get{return eventName;} }
+			public int MaxAmount{get{return maxAmount;}}
+			public bool IsBig{get{return isBig;}}
+			public bool IsGroup{get{return isGroup;}}
 		}
+
 	}
 }

@@ -43,6 +43,8 @@ namespace Amigyo{
 			score += info.Weight;
 			additionalTime += info.BonusSecond;
 
+			//ここにイベント変更処理を記述（EventTypeがNoneならイベントは変更しない）
+
 			Debug.Log("FishInfo\t weight: "+info.Weight+"  time: "+info.BonusSecond+"  event: "+info.EventName);
 		}
 	}
