@@ -9,6 +9,8 @@ using UniRx.Triggers;
 namespace Amigyo{
 	namespace Spawners{
 		public class StandardSpawner : Spawner {
+			const float OffsetRandomSec = 0f;
+			const float IntervalRandomSec = 0f;
 
 			//@super Fields
 			//protected IReadOnlyList<GameObject> fishElements;
@@ -39,10 +41,10 @@ namespace Amigyo{
 				for(int i = 0; i < fishElements.Count; i++){
 					int index = i;		//iはforの最後で++されるため、isSpawableにそのまま使うとOutOfRangeする
 
-					Observable.Timer(System.TimeSpan.FromSeconds(Random.value*5)).Take(1).Subscribe(_ => {
+					Observable.Timer(System.TimeSpan.FromSeconds(Random.value*OffsetRandomSec)).Take(1).Subscribe(_ => {
 						//Debug.LogWarning("Timer Set");
 
-						disposables.Add(Observable.Interval(System.TimeSpan.FromSeconds(3f)).Subscribe(__ => {
+						disposables.Add(Observable.Interval(System.TimeSpan.FromSeconds(IntervalRandomSec)).Subscribe(__ => {
 							//Debug.LogWarning("Create timing");
 							if(isSpawable(index)){
 								Instantiate(index);
