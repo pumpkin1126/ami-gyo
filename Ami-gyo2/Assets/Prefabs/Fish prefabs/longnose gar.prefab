@@ -157,6 +157,8 @@ GameObject:
   - component: {fileID: 4578135484144116}
   - component: {fileID: 65305159072433564}
   - component: {fileID: 95448844434187230}
+  - component: {fileID: 54457663785424234}
+  - component: {fileID: 114563599880223830}
   m_Layer: 11
   m_Name: longnose gar
   m_TagString: Untagged
@@ -506,6 +508,21 @@ Transform:
   m_Father: {fileID: 4239063141957774}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54457663785424234
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1200724415555458}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65305159072433564
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -536,6 +553,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114563599880223830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1200724415555458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc62c196c4da24489ddb956cdb36f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+    weight: 0
+    bonusSecond: 0
+    eventName: 0
+    maxAmount: 0
+    isBig: 0
+    isGroup: 0
+  Speed: 0
+  Scale: 1
 --- !u!137 &137258807694692450
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
