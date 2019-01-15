@@ -53,6 +53,8 @@ GameObject:
   - component: {fileID: 95261130798688042}
   - component: {fileID: 54578597591210516}
   - component: {fileID: 114144924594196136}
+  - component: {fileID: 114291124508645544}
+  - component: {fileID: 114497241113922452}
   m_Layer: 11
   m_Name: trout
   m_TagString: Untagged
@@ -454,9 +456,33 @@ MonoBehaviour:
     eventName: 0
     maxAmount: 0
     isBig: 0
-    isGroup: 0
   Speed: 0
   Scale: 1
+--- !u!114 &114291124508645544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234918367267080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e060ceab0a190234ca143159b62b6bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ViewRange_r: 7
+  View2CrowdedRange: 0.5
+  FishAmountInGroup: 0
+--- !u!114 &114497241113922452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234918367267080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a0738ca0fc2cb4d901c41c74c16405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &137932306474303172
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

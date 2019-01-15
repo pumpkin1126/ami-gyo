@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Amigyo{
 	namespace Fishes{
-		[RequireComponent (typeof(Migration))]
 		public class Group : MonoBehaviour, IFishBehavior {
 			
 			public float ViewRange_r = 7f;

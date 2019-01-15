@@ -33,7 +33,8 @@ namespace Amigyo{
 			void FixedUpdate(){
 				Vector3 velocity = GetVelocity();
 				transform.rotation = Quaternion.LookRotation(velocity);
-				//rigid.AddForce(GetVelocity()*Speed*Time.deltaTime, ForceMode.VelocityChange);
+				//rigid.AddForce(velocity*Speed*Time.deltaTime, ForceMode.Acceleration);
+				
 				rigid.velocity = velocity*Speed;
 			}
 
@@ -77,7 +78,7 @@ namespace Amigyo{
 
 			void OnTriggerExit(Collider c){
 				if(c.gameObject.tag == "Area"){
-//					Die();
+					Die();
 				}
 			}
 		}
