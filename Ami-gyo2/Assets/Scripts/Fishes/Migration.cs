@@ -19,7 +19,7 @@ namespace Amigyo{
 				c = Mathf.Sqrt(a*a - b*b);
 			}
 
-			public Vector3 GetVelocity(){
+			public Vector3 GetVelocity(Vector3 currentVelocity){
 
 				float sign = Mathf.Sign(Vector3.Cross(Vector3.right, transform.position - AreaCenterPos).y);
 				float t = Vector3.Angle(Vector3.right, transform.position - AreaCenterPos)*Mathf.Deg2Rad;

@@ -5,6 +5,7 @@ using UnityEngine;
 using Amigyo.Fishes;
 using UniRx;
 using UniRx.Triggers;
+using System.Linq;
 
 namespace Amigyo{
 	namespace Spawners{
@@ -55,15 +56,7 @@ namespace Amigyo{
 			}
 			
 			public override void Update () {
-				//特に何も書くことなかった
 				
-				/*
-				string s = "";
-				foreach(var pair in fishCounts)
-					s += pair + "    ";
-
-				Debug.Log(s);
-				*/
 			}
 
 			
@@ -71,9 +64,53 @@ namespace Amigyo{
 				return (fishElements[index].prefab.GetComponent<Fish>().info.MaxAmount > fishElements[index].existCount);
 			}
 
-			void Instantiate(int index){
-				int side = (int)(UnityEngine.Random.value * 3);
+			//一連の生成処理（群れの魚の生成なら、その群れに含まれるすべての魚を生成する処理）
 
+			void Instantiate(int index){
+				var centerPoint = GetInstantiateLocation();
+
+				var prefab = fishElements[index].prefab;
+
+				int end = 1;
+
+				//群れかどうかのチェック
+				var groupScript = prefab.GetComponent<Group>();
+				if(groupScript != null){
+					end = groupScript.FishAmountInGroup;
+				}
+
+				var spawnFishScripts = new List<Group>();		//生成した魚を一時的に保持
+
+				for(int i = 0; i < end; i++){
+					var spawnPoint = centerPoint;
+					//群れの場合、魚のスポーン地点が重ならないようにする（群れじゃない場合はforが1回しか呼ばれない）
+					if(i != 0)	spawnPoint += new Vector3(Random.value, 0, Random.value)*Range.x/5;
+					var spawnFish = Spawn(index, spawnPoint);
+					spawnFishScripts.Add(spawnFish.GetComponent<Group>());	
+				}
+
+				fishElements[index].existCount++;		//現在存在している魚の数++（群れの場合は群れ1つでカウント1つ分）
+
+				if(end == 1)	return;
+
+				//群れを作る魚にほかの魚を渡す
+				foreach(var fishScript in spawnFishScripts)
+					fishScript.SetUp(spawnFishScripts);
+
+			}
+
+			//一匹の生成処理
+
+			GameObject Spawn(int index, Vector3 spawnPoint){
+
+				var fishObj = GameObject.Instantiate(fishElements[index].prefab, spawnPoint, Quaternion.identity);
+				fishObj.GetComponent<Fish>().SetIdAndDieMethod(index, DecreaseFishCount);
+
+				return fishObj;
+			}
+
+			Vector3 GetInstantiateLocation(){
+				int side = (int)(UnityEngine.Random.value * 3);
 				var spawnPoint = Vector3.zero;
 
 				switch(side%2){
@@ -86,12 +123,7 @@ namespace Amigyo{
 				}
 
 				spawnPoint += area.transform.position;
-
-				var rotation = Quaternion.LookRotation(area.transform.position - spawnPoint);
-				var fishObj = GameObject.Instantiate(fishElements[index].prefab, spawnPoint, rotation);
-				fishObj.GetComponent<Fish>().SetIdAndDieMethod(index, DecreaseFishCount);
-				
-				fishElements[index].existCount++;
+				return spawnPoint;
 			}
 
 			public void DecreaseFishCount(int index){

@@ -34,7 +34,7 @@ namespace Amigyo{
 				Vector3 velocity = GetVelocity();
 				transform.rotation = Quaternion.LookRotation(velocity);
 				//rigid.AddForce(GetVelocity()*Speed*Time.deltaTime, ForceMode.VelocityChange);
-				rigid.velocity = GetVelocity()*Speed;
+				rigid.velocity = velocity*Speed;
 			}
 
 			void Update () {
@@ -50,7 +50,7 @@ namespace Amigyo{
 
 				Vector3 velocity = Vector3.zero;
 				foreach(var behaveScript in behaveList){
-					velocity += behaveScript.GetVelocity();
+					velocity += behaveScript.GetVelocity(rigid.velocity);
 				}
 
 				velocity = velocity.normalized;
@@ -58,7 +58,14 @@ namespace Amigyo{
 			}
 
 			void Die(){
-				decreaseFishCount(id);
+				var groupScript = GetComponent<Group>();
+				
+				if(groupScript != null){
+					groupScript.Die(decreaseFishCount, id);		//群れの魚の場合、処理が異なるので、委譲
+				}else{
+					decreaseFishCount(id);
+				}
+
 				Destroy(this.gameObject);
 			}
 
@@ -81,14 +88,13 @@ namespace Amigyo{
 			[SerializeField] int bonusSecond;
 			[SerializeField] EventType eventName;
 			[SerializeField] int maxAmount;
-			[SerializeField] bool isBig = false, isGroup = false;
+			[SerializeField] bool isBig = false;
 
 			public int Weight{ get{return weight;} }
 			public int BonusSecond{ get{return bonusSecond;} }
 			public EventType EventName{ get{return eventName;} }
 			public int MaxAmount{get{return maxAmount;}}
 			public bool IsBig{get{return isBig;}}
-			public bool IsGroup{get{return isGroup;}}
 		}
 
 	}

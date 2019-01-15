@@ -129,6 +129,8 @@ GameObject:
   - component: {fileID: 95521638125036132}
   - component: {fileID: 54721333028237474}
   - component: {fileID: 114357003867510578}
+  - component: {fileID: 114233040850670162}
+  - component: {fileID: 114206172228258580}
   m_Layer: 11
   m_Name: brook trout
   m_TagString: Untagged
@@ -437,6 +439,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114206172228258580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569767388231130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e060ceab0a190234ca143159b62b6bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FishAmountInGroup: 5
+--- !u!114 &114233040850670162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569767388231130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d08148dc700784f90a7b224e6152ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114357003867510578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -452,11 +477,10 @@ MonoBehaviour:
     weight: 0
     bonusSecond: 0
     eventName: 0
-    maxAmount: 0
+    maxAmount: 2
     isBig: 0
-    isGroup: 0
   Speed: 0
-  Scale: 1
+  Scale: 4
 --- !u!137 &137971785693137542
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

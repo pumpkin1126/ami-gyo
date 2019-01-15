@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishPrefabs:
   - {fileID: 1361852580158066, guid: fcb74b1dd82c04f4bb445d450d5c53b7, type: 2}
+  - {fileID: 1569767388231130, guid: 5101f8c74bf69224dbb0bae6a3abe397, type: 2}

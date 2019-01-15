@@ -6,7 +6,7 @@ namespace Amigyo{
 	namespace Fishes{
 		public interface IFishBehavior{
 		
-			Vector3 GetVelocity();
+			Vector3 GetVelocity(Vector3 currentVelocity);
 		}
 	}
 }

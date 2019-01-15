@@ -493,7 +493,7 @@ MonoBehaviour:
     weight: 0
     bonusSecond: 0
     eventName: 0
-    maxAmount: 5
+    maxAmount: 15
     isBig: 0
     isGroup: 0
   Speed: 5
