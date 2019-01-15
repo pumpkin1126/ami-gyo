@@ -450,6 +450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e060ceab0a190234ca143159b62b6bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewRange_r: 7
+  View2CrowdedRange: 0.231
   FishAmountInGroup: 5
 --- !u!114 &114233040850670162
 MonoBehaviour:
@@ -479,7 +481,7 @@ MonoBehaviour:
     eventName: 0
     maxAmount: 2
     isBig: 0
-  Speed: 0
+  Speed: 7
   Scale: 4
 --- !u!137 &137971785693137542
 SkinnedMeshRenderer:
