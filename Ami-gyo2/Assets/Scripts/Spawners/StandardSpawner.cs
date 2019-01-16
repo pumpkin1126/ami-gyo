@@ -10,8 +10,8 @@ using System.Linq;
 namespace Amigyo{
 	namespace Spawners{
 		public class StandardSpawner : Spawner {
-			const float OffsetRandomSec = 0f;
-			const float IntervalRandomSec = 0f;
+			const float OffsetRandomSec = 3f;
+			const float IntervalRandomSec = 4f;
 
 			//@super Fields
 			//protected IReadOnlyList<GameObject> fishElements;
@@ -35,7 +35,8 @@ namespace Amigyo{
 				var collider = area.GetComponent<BoxCollider>();
 				Range = collider.bounds.size;
 
-				//Debug.LogWarning("Activate");
+				Debug.Log("fishElements: "+fishElements.Count);
+
 
 				//生成タイミングは3秒おき（種類ごとにオフセットはランダム）
 
@@ -77,6 +78,7 @@ namespace Amigyo{
 				var groupScript = prefab.GetComponent<Group>();
 				if(groupScript != null){
 					end = groupScript.FishAmountInGroup;
+					if(end == 0)	Debug.LogError(prefab.name+"プレハブのGroupスクリプトのFishAmountInGroupが0になっています");
 				}
 
 				var spawnFishScripts = new List<Group>();		//生成した魚を一時的に保持
@@ -86,7 +88,7 @@ namespace Amigyo{
 					//群れの場合、魚のスポーン地点が重ならないようにする（群れじゃない場合はforが1回しか呼ばれない）
 					if(i != 0)	spawnPoint += new Vector3(Random.value, 0, Random.value)*Range.x/5;
 					var spawnFish = Spawn(index, spawnPoint);
-					spawnFishScripts.Add(spawnFish.GetComponent<Group>());	
+					spawnFishScripts.Add(spawnFish.GetComponent<Group>());
 				}
 
 				fishElements[index].existCount++;		//現在存在している魚の数++（群れの場合は群れ1つでカウント1つ分）

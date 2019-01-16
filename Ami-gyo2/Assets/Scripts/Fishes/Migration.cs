@@ -22,6 +22,7 @@ namespace Amigyo{
 				a = extents.x*3/4f;
 				b = a*1/2f;
 				c = Mathf.Sqrt(a*a - b*b);
+				
 			}
 
 			public Vector3 GetVelocity(Vector3 currentVelocity){
@@ -29,9 +30,8 @@ namespace Amigyo{
 				if(isOutProcess)	return currentVelocity;
 
 				//楕円の円周方向の速度を算出
-				float sign = Mathf.Sign(Vector3.Cross(Vector3.right, transform.position - AreaCenterPos).y);
-				float t = Vector3.Angle(Vector3.right, transform.position - AreaCenterPos)*Mathf.Deg2Rad;
-				if(sign == 1)	t = 2*Mathf.PI - t;		//angleでは、2つのベクトル間の小さいほうの角度しかとれないので、360度にスケーリングする
+				var centerToThisObj = (transform.position - AreaCenterPos);
+				float t = StaticTools.GetAngleFromVector(Vector3.right, centerToThisObj);
 
 				Vector3 v = new Vector3(-a*Mathf.Sin(t), 0, b*Mathf.Cos(t));
 

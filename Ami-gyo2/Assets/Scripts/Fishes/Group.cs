@@ -9,7 +9,7 @@ namespace Amigyo{
 			public float ViewRange_r = 7f;
 			[Range(0.0f, 1.0f)]
 			public float View2CrowdedRange = 0.5f;
-			public int FishAmountInGroup;
+			public int FishAmountInGroup = 3;
 			List<Group> otherFishScripts;
 
 
