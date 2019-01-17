@@ -10,6 +10,9 @@ namespace Amigyo{
 			[Range(0.0f, 1.0f)]
 			public float View2CrowdedRange = 0.5f;
 			public int FishAmountInGroup = 3;
+			[Range(0f, 1f)]
+			public float VelocityIntensity = 1f;		//強度（このスクリプトによる速度が全体の速度にどの程度影響するか）を表す
+
 			List<Group> otherFishScripts;
 
 
@@ -50,7 +53,7 @@ namespace Amigyo{
     			}
 
 				//周囲の魚の進行方向、重心、混雑していない方向をすべて足したもの
-    			return (addV + toCentroid + crowdedAddV).normalized;
+    			return (addV + toCentroid + crowdedAddV).normalized * VelocityIntensity;
 			}
 
 			public void Die(System.Action<int> decreaseFishCount, int id){
