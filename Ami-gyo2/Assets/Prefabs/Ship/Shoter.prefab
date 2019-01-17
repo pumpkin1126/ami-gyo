@@ -196,4 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac92497fe1c95764b85b68447da5aaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetPrefab: {fileID: 1405165539944386, guid: 5fde195cbc6392642ac630464d75905a, type: 2}
+  netPrefab: {fileID: 0}
+  inputType: 0
+  portName: 
+  baudRate: 0
