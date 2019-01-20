@@ -6,7 +6,7 @@ using Amigyo.Spawners;
 
 namespace Amigyo{
 	namespace Fishes{
-		public class Wandering : MonoBehaviour, IFishBehavior, IGroupable {
+		public class Wandering : GroupableScript, IFishBehavior {
 			const float Extents2turnR = 1/5f;
 			const float Extents2MinDistance = 1/4f;
 			const float MinDeg = 180f;
@@ -19,15 +19,8 @@ namespace Amigyo{
 
 			public WanderingValues values;
 
-			void Start(){
-
-				//群れのリーダーか、群れを作らない魚しかこのスクリプトを有効化しない
-				//（群れのリーダーの場合は、別の関数からSetUp()が呼ばれる）
-				if(GetComponent<Group>() == null)
-					SetUp();
-			}
-
-			void SetUp(){
+			//最初のリーダーと群れを作らない種の魚だけこの関数が呼ばれる。他の魚はリーダーからデータを引継ぐ
+			protected override void Initialize(){
 				values = new WanderingValues();
 				var v = values;
 
@@ -91,17 +84,12 @@ namespace Amigyo{
 				return v.currentVelocity * VelocityIntensity;
 			}
 
-			//リーダーが死んだときに、放浪に関する変数の値を引き継ぐ（引数がnullの場合は自分が最初のリーダー）
-			public void SetWanderingValues(WanderingValues v){
-				if(v == null)	SetUp();
-				else			values = v;
-			}
-
-			public void Die(List<Group> groupScripts, Group nextLeaderScript){
+			public override void Die(List<Group> groupScripts, Group nextLeaderScript){
 				if(nextLeaderScript != null)
 					nextLeaderScript.GetComponent<Wandering>().InheritLeader(values);
 			}
 
+			//リーダーが死んだときに、放浪に関する変数の値を引き継ぐ
 			public void InheritLeader(WanderingValues v){
 				values = v;
 			}

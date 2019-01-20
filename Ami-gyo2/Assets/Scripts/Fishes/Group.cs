@@ -27,6 +27,7 @@ namespace Amigyo{
 			public float LeaderMagnifLoc = 5f;
 
 			List<Group> otherGroupScripts;
+			List<GroupableScript> groupables;
 			bool isLeader;
 
 			public LineRenderer renderer_debug;
@@ -42,10 +43,17 @@ namespace Amigyo{
 					isLeader = true;
 				otherGroupScripts.Remove(this);
 				
+				//群れと重複できる行動スクリプトの初期化
+				groupables = new List<GroupableScript>(GetComponents<GroupableScript>());
+				foreach(var script in groupables)
+					script.SetUp(isLeader);
+
 				//放浪スクリプトの初期化
+				/*
 				var wandering = GetComponent<Wandering>();
 				if(wandering != null && isLeader)
 					wandering.SetWanderingValues(null);
+				*/
 
 				//リーダーは生成後、群れのほかの魚が集まるのを待つ
 				var leaderGroupScript = (isLeader ? this : otherGroupScripts[0]);
@@ -129,7 +137,7 @@ namespace Amigyo{
 					}
 
 					//他のスクリプトにも反映（リーダーの引継ぎとか）
-					var groupables = GetComponents<IGroupable>();
+					var groupables = GetComponents<GroupableScript>();
 					foreach(var script in groupables)
 						script.Die(otherGroupScripts, nextLeaderScript);
 				}
