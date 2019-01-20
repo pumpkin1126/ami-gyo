@@ -12,6 +12,9 @@ namespace Amigyo{
 			const float MaxDeg = 270f;
 			const int MaxTurnTimes = 10;
 			const int MinTurnTimes = 5;
+
+			[Range(0.0f, 1.0f)]
+			public float VelocityIntensity = 1f;		//強度（このスクリプトによる速度が全体の速度にどの程度影響するか）を表す
 		
 			int turnCount;
 			int turnCountMax;
@@ -75,7 +78,7 @@ namespace Amigyo{
 				}else
 					velocity = nextDistance.normalized;				//回ってない間はまっすぐ進む
 				
-				return velocity;
+				return velocity * VelocityIntensity;
 			}
 
 		}

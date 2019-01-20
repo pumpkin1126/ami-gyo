@@ -470,8 +470,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewRange_r: 7
-  View2CrowdedRange: 0
+  View2CrowdedRange: 0.11
   FishAmountInGroup: 4
+  VelocityIntensity: 1
 --- !u!114 &114497241113922452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -483,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a0738ca0fc2cb4d901c41c74c16405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VelocityIntensity: 0.37
 --- !u!137 &137932306474303172
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

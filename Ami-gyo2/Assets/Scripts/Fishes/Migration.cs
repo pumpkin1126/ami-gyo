@@ -7,6 +7,9 @@ namespace Amigyo{
 	namespace Fishes{
 		public class Migration : MonoBehaviour, IFishBehavior {
 
+			[Range(0f, 1f)]
+			public float VelocityIntensity = 1f;
+
 			Vector3 AreaCenterPos;
 			float a, b, c;		//楕円の方程式準拠の名前
 
@@ -55,8 +58,8 @@ namespace Amigyo{
 					}
 				}
 
-				//正規化して返す
-				v = v.normalized;
+				//正規化して強度をかけて返す
+				v = v.normalized * VelocityIntensity;
 				return v;
 			}
 		}
