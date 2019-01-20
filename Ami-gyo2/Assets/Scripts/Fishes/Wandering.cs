@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Amigyo.Spawners;
 
 namespace Amigyo{
@@ -13,9 +14,9 @@ namespace Amigyo{
 			const int MaxTurnTimes = 10;
 			const int MinTurnTimes = 5;
 
-			[Range(0.0f, 1.0f)]
+			[Range(0.0f, 1.0f)] [Tooltip("このスクリプトによる速度が全体の速度にどれだけ影響するか")] 
 			public float VelocityIntensity = 1f;		//強度（このスクリプトによる速度が全体の速度にどの程度影響するか）を表す
-		
+
 			int turnCount;
 			int turnCountMax;
 
@@ -25,8 +26,20 @@ namespace Amigyo{
 			bool isTurning = false;
 			Quaternion omega;
 			float destinationRad = 0;
+			Vector3 currentVelocity;
+
+			List<Fish> otherWanderScripts;
+			bool isLeader = true;
 
 			void Start(){
+
+				//群れのリーダーか、群れを作らない魚しかこのスクリプトを有効化しない
+				//（群れのリーダーの場合は、別の関数からSetUp()が呼ばれる）
+				if(GetComponent<Group>() == null)
+					SetUp();
+			}
+
+			void SetUp(){
 				turnCount = 0;
 				turnCountMax = (int)(Random.value * (MaxTurnTimes - MinTurnTimes)) + MinTurnTimes;
 				
@@ -40,6 +53,8 @@ namespace Amigyo{
 			}
 
 			void Update(){
+				if(!isLeader)	return;
+
 				var currentDistance = (turnedLocation - transform.position);
 
 				
@@ -58,10 +73,12 @@ namespace Amigyo{
 
 			}
 
-			public Vector3 GetVelocity(Vector3 currentVelocity){
-				Vector3 velocity = Vector3.zero;
+			public Vector3 GetVelocity(Vector3 _currentVelocity){
+				if(!isLeader)	return Vector3.zero;
+				
 				if(isTurning){
-
+					
+					//ある程度回ったならターン終了（次の直進方向などを決めて、速度は前フレームから変えずにreturn
 					var startVector = nextDistance;
 					if(StaticTools.GetAngleFromVector(currentVelocity, startVector) > destinationRad){
 						isTurning = false;
@@ -73,12 +90,18 @@ namespace Amigyo{
 						return currentVelocity;
 					}
 
-					velocity = omega * currentVelocity;
+					currentVelocity = omega * currentVelocity;
 
 				}else
-					velocity = nextDistance.normalized;				//回ってない間はまっすぐ進む
+					currentVelocity = nextDistance.normalized;				//回ってない間はまっすぐ進む
 				
-				return velocity * VelocityIntensity;
+				return currentVelocity * VelocityIntensity;
+			}
+
+			public void SetIsLeader(bool isLeader){
+				this.isLeader = isLeader;
+				if(isLeader)
+					SetUp();
 			}
 
 		}

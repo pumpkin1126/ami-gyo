@@ -21,10 +21,12 @@ namespace Amigyo{
 			Action<int> decreaseFishCount;
 			Rigidbody rigid;
 			List<IFishBehavior> behaveList;
+			float currentSpeed;
 
 			void Start () {
 				rigid = GetComponent<Rigidbody>();
 				transform.localScale = Vector3.one * Scale;
+				InitializeSpeed();
 				
 				//配列をListに変換してるだけ
 				behaveList = GetComponents<IFishBehavior>().ToList();
@@ -35,7 +37,7 @@ namespace Amigyo{
 				transform.rotation = Quaternion.LookRotation(velocity);
 				//rigid.AddForce(velocity*Speed*Time.deltaTime, ForceMode.Acceleration);
 				
-				rigid.velocity = velocity*Speed;
+				rigid.velocity = velocity*currentSpeed;
 			}
 
 			void Update () {
@@ -68,6 +70,15 @@ namespace Amigyo{
 				}
 
 				Destroy(this.gameObject);
+			}
+
+			public void InitializeSpeed(){
+				currentSpeed = Speed;
+			}
+
+			public void MultipleSpeed(float magnif){
+				InitializeSpeed();
+				currentSpeed *= magnif;
 			}
 
 			void OnCollisionEnter(Collision c){

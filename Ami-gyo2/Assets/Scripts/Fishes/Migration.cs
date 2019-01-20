@@ -7,8 +7,8 @@ namespace Amigyo{
 	namespace Fishes{
 		public class Migration : MonoBehaviour, IFishBehavior {
 
-			[Range(0f, 1f)]
-			public float VelocityIntensity = 1f;
+			[Range(0f, 1f)] [Tooltip("このスクリプトによる速度が全体の速度にどれだけ影響するか")] 
+			public float VelocityIntensity = 1f;		//強度（このスクリプトによる速度が全体の速度にどの程度影響するか）を表す
 
 			Vector3 AreaCenterPos;
 			float a, b, c;		//楕円の方程式準拠の名前
