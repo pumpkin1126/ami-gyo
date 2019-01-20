@@ -6,7 +6,7 @@ using Amigyo.Spawners;
 
 namespace Amigyo{
 	namespace Fishes{
-		public class Wandering : MonoBehaviour, IFishBehavior {
+		public class Wandering : MonoBehaviour, IFishBehavior, IGroupable {
 			const float Extents2turnR = 1/5f;
 			const float Extents2MinDistance = 1/4f;
 			const float MinDeg = 180f;
@@ -17,19 +17,7 @@ namespace Amigyo{
 			[Range(0.0f, 1.0f)] [Tooltip("このスクリプトによる速度が全体の速度にどれだけ影響するか")] 
 			public float VelocityIntensity = 1f;		//強度（このスクリプトによる速度が全体の速度にどの程度影響するか）を表す
 
-			int turnCount;
-			int turnCountMax;
-
-			Vector3 AreaExtents;
-			Vector3 nextDistance;
-			Vector3 turnedLocation;
-			bool isTurning = false;
-			Quaternion omega;
-			float destinationRad = 0;
-			Vector3 currentVelocity;
-
-			List<Fish> otherWanderScripts;
-			bool isLeader = true;
+			public WanderingValues values;
 
 			void Start(){
 
@@ -40,70 +28,96 @@ namespace Amigyo{
 			}
 
 			void SetUp(){
-				turnCount = 0;
-				turnCountMax = (int)(Random.value * (MaxTurnTimes - MinTurnTimes)) + MinTurnTimes;
+				values = new WanderingValues();
+				var v = values;
+
+				v.turnCount = 0;
+				v.turnCountMax = (int)(Random.value * (MaxTurnTimes - MinTurnTimes)) + MinTurnTimes;
 				
 				var Area = GameManager.Instance.GetComponent<SpawnerHolder>().Area;
-				AreaExtents = Area.GetComponent<BoxCollider>().bounds.extents;
+				v.AreaExtents = Area.GetComponent<BoxCollider>().bounds.extents;
 				var direction = (Area.transform.position - transform.position);
-				direction += direction.normalized * AreaExtents.x/5;
+				direction += direction.normalized * v.AreaExtents.x/5;
 
-				nextDistance = direction;
-				turnedLocation = transform.position;
+				v.nextDistance = direction;
+				v.turnedLocation = transform.position;
 			}
 
 			void Update(){
-				if(!isLeader)	return;
+				var v = values;
+				if(v == null)	return;
 
-				var currentDistance = (turnedLocation - transform.position);
+				var currentDistance = (v.turnedLocation - transform.position);
 
 				
 				//ターン中もしくは今後ターンしないなら、ここで終了
-				if(!isTurning && turnCount > turnCountMax)	return;
+				if(!v.isTurning && v.turnCount > v.turnCountMax)	return;
 
 				//一定距離動いたら、ターン
-				if(currentDistance.magnitude > nextDistance.magnitude){
-					isTurning = true;
+				if(currentDistance.magnitude > v.nextDistance.magnitude){
+					v.isTurning = true;
 
 					//回転の様々な初期設定
-					destinationRad = (Random.value * (MaxDeg - MinDeg) + MinDeg)*Mathf.Deg2Rad;
-					float rad = GetComponent<Fish>().Speed / (AreaExtents.x/Extents2turnR);
-					omega = Quaternion.AngleAxis(rad*Mathf.Rad2Deg, Vector3.up);
+					v.destinationRad = (Random.value * (MaxDeg - MinDeg) + MinDeg)*Mathf.Deg2Rad;
+					float rad = GetComponent<Fish>().Speed / (v.AreaExtents.x/Extents2turnR);
+					v.omega = Quaternion.AngleAxis(rad*Mathf.Rad2Deg, Vector3.up);
 				}
 
 			}
 
 			public Vector3 GetVelocity(Vector3 _currentVelocity){
-				if(!isLeader)	return Vector3.zero;
+				if(values == null)	return Vector3.zero;
+				var v = values;
 				
-				if(isTurning){
+				if(v.isTurning){
 					
 					//ある程度回ったならターン終了（次の直進方向などを決めて、速度は前フレームから変えずにreturn
-					var startVector = nextDistance;
-					if(StaticTools.GetAngleFromVector(currentVelocity, startVector) > destinationRad){
-						isTurning = false;
-						var additionalDist = Mathf.Abs(StaticTools.Gaussian(0, 1)/2 * AreaExtents.x/5);
-						nextDistance = transform.forward * (additionalDist + AreaExtents.x*Extents2MinDistance);
-						turnedLocation = this.transform.position;
-						turnCount++;
+					var startVector = v.nextDistance;
+					if(StaticTools.GetAngleFromVector(v.currentVelocity, startVector) > v.destinationRad){
+						v.isTurning = false;
+						var additionalDist = Mathf.Abs(StaticTools.Gaussian(0, 1)/2 * v.AreaExtents.x/5);
+						v.nextDistance = transform.forward * (additionalDist + v.AreaExtents.x*Extents2MinDistance);
+						v.turnedLocation = this.transform.position;
+						v.turnCount++;
 
-						return currentVelocity;
+						return v.currentVelocity;
 					}
 
-					currentVelocity = omega * currentVelocity;
+					v.currentVelocity = v.omega * v.currentVelocity;
 
 				}else
-					currentVelocity = nextDistance.normalized;				//回ってない間はまっすぐ進む
+					v.currentVelocity = v.nextDistance.normalized;				//回ってない間はまっすぐ進む
 				
-				return currentVelocity * VelocityIntensity;
+				return v.currentVelocity * VelocityIntensity;
 			}
 
-			public void SetIsLeader(bool isLeader){
-				this.isLeader = isLeader;
-				if(isLeader)
-					SetUp();
+			//リーダーが死んだときに、放浪に関する変数の値を引き継ぐ（引数がnullの場合は自分が最初のリーダー）
+			public void SetWanderingValues(WanderingValues v){
+				if(v == null)	SetUp();
+				else			values = v;
 			}
 
+			public void Die(List<Group> groupScripts, Group nextLeaderScript){
+				if(nextLeaderScript != null)
+					nextLeaderScript.GetComponent<Wandering>().InheritLeader(values);
+			}
+
+			public void InheritLeader(WanderingValues v){
+				values = v;
+			}
+
+		}
+
+		public class WanderingValues{
+			public int turnCount;
+			public int turnCountMax;
+			public Vector3 AreaExtents;
+			public Vector3 nextDistance;
+			public Vector3 turnedLocation;
+			public bool isTurning = false;
+			public Quaternion omega;
+			public float destinationRad = 0;
+			public Vector3 currentVelocity;
 		}
 	}
 }

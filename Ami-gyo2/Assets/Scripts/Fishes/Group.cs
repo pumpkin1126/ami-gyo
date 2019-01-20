@@ -11,7 +11,7 @@ namespace Amigyo{
 			[Range(0.0f, 1.0f)]
 			public float View2CrowdedRange = 0.5f;
 			public int FishAmountInGroup = 3;
-			
+
 			[Header("Intensity")]
 			[Range(0f, 1f)] [Tooltip("このスクリプトによる速度が全体の速度にどれだけ影響するか")] 
 			public float VelocityIntensity = 1f;		//強度（このスクリプトによる速度が全体の速度にどの程度影響するか）を表す
@@ -37,14 +37,15 @@ namespace Amigyo{
 
 				//他の魚をリストとして保持
 				otherGroupScripts = new List<Group>(fishScripts);
+				
 				if(otherGroupScripts[0] == this)
 					isLeader = true;
 				otherGroupScripts.Remove(this);
 				
 				//放浪スクリプトの初期化
 				var wandering = GetComponent<Wandering>();
-				if(wandering != null)
-					wandering.SetIsLeader(isLeader);
+				if(wandering != null && isLeader)
+					wandering.SetWanderingValues(null);
 
 				//リーダーは生成後、群れのほかの魚が集まるのを待つ
 				var leaderGroupScript = (isLeader ? this : otherGroupScripts[0]);
@@ -103,11 +104,11 @@ namespace Amigyo{
 				var velocity = (sumV + toCentroid + crowdedSumV);
 
 				//デバッグ用（速度の方向をLineRendererで描画
-				if(renderer_debug != null && loc_debug != Vector3.zero){
+				/*if(renderer_debug != null && loc_debug != Vector3.zero){
 					renderer_debug.SetPosition(0, this.transform.position);
 					renderer_debug.SetPosition(1, this.transform.position + loc_debug);
 					renderer_debug.SetColors(Color.yellow, Color.red);
-				}
+				}*/
 				//////
 
     			return velocity.normalized * VelocityIntensity;
@@ -118,14 +119,28 @@ namespace Amigyo{
 				if(otherGroupScripts.Count == 0){
 					decreaseFishCount(id);		//群れ1つでFishCount1つ分なので、群れの魚がすべて消えない限り、decreaseしちゃいけない
 				}else{
-					foreach(var otherScript in otherGroupScripts)
-						otherScript.GetComponent<Group>().Delete(this);	//他の魚がもつListから自分を削除
+					//死んだことを教えて、自分がリーダーなら誰かにリーダーを引き継ぐ
+					Group nextLeaderScript = null;
+					if(isLeader)
+						nextLeaderScript = otherGroupScripts[0];
+
+					foreach(var otherScript in otherGroupScripts){
+						otherScript.GetComponent<Group>().Delete(this, nextLeaderScript);	//他の魚がもつListから自分を削除
+					}
+
+					//他のスクリプトにも反映（リーダーの引継ぎとか）
+					var groupables = GetComponents<IGroupable>();
+					foreach(var script in groupables)
+						script.Die(otherGroupScripts, nextLeaderScript);
 				}
 			}
 
 			//Listから指定された魚を削除する
-			public void Delete(Group script){
+			public void Delete(Group script, Group nextLeaderScript){
 				otherGroupScripts.Remove(script);
+				if(nextLeaderScript == this){
+					isLeader = true;
+				}
 			}
 
 		}
