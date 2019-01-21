@@ -10,6 +10,8 @@ namespace Amigyo{
 			public float ViewRange_r = 7f;
 			[Range(0.0f, 1.0f)]
 			public float View2CrowdedRange = 0.5f;
+			[Range(0.0f, 1.0f)]
+			public float View2GatherRange = 0.6f;
 			public int FishAmountInGroup = 3;
 
 			[Header("Intensity")]
@@ -29,6 +31,7 @@ namespace Amigyo{
 			List<Group> otherGroupScripts;
 			List<GroupableScript> groupables;
 			bool isLeader;
+			bool isGathering = false;
 
 			public LineRenderer renderer_debug;
 
@@ -56,17 +59,50 @@ namespace Amigyo{
 				*/
 
 				//リーダーは生成後、群れのほかの魚が集まるのを待つ
+				if(!isLeader)	return;
+
+				isGathering = true;
 				var leaderGroupScript = (isLeader ? this : otherGroupScripts[0]);
 				Observable.TimerFrame(1).Subscribe(_ => {
 					var leaderScript = leaderGroupScript.GetComponent<Fish>();
-					leaderScript.MultipleSpeed(0.05f);
-					Observable.TimerFrame(30).Subscribe(__ => {
-						leaderScript.InitializeSpeed();
-					}) ;
+					leaderScript.MultipleSpeed(0);
 				});
 			}
 
+			void Update(){
+				//最初に群れのほかの魚が集まるまでの処理
+				if(isGathering){
+					bool finishGather = true;
+					foreach(var otherFish in otherGroupScripts){
+						float dist = (transform.position - otherFish.transform.position).magnitude;
+						if(dist > ViewRange_r * View2GatherRange){
+							finishGather = false;
+							break;
+						}
+					}
+
+					Debug.Log("Gathering...");
+
+					//集まったら動き始める
+					if(finishGather){
+						isGathering = false;
+						foreach(var script in groupables)
+							script.InitializeIntensity();		//他のスクリプト（放浪など）の速度を0から戻す
+						
+						GetComponent<Fish>().InitializeSpeed();
+					}
+				}
+
+				if(isLeader)
+				if(renderer_debug != null){
+					renderer_debug.SetPosition(0, this.transform.position);
+					renderer_debug.SetPosition(1, this.transform.position + transform.forward);
+				}
+			}
+
 			public Vector3 GetVelocity(Vector3 currentVelocity){
+				if(isLeader)	return Vector3.zero;
+
 				Vector3 sumV = Vector3.zero;      //周囲の魚の進行方向の総和
     			Vector3 sumLoc = Vector3.zero;    //周囲の魚の重心
     			Vector3 crowdedSumV = Vector3.zero;    //混雑していない方向の総和
@@ -86,6 +122,8 @@ namespace Amigyo{
 					if(isFirstElement){
 						addV *= LeaderMagnifV;			//群れのリーダー（最初の参照先）の影響力を倍率として掛ける
 						locMagnif = LeaderMagnifLoc;	//リーダーは重心に及ぼす影響力も大きい
+					}else{
+						addV *= 0;
 					}
 					sumV += addV;
     				sumLoc += fish.transform.position * locMagnif;
@@ -112,11 +150,12 @@ namespace Amigyo{
 				var velocity = (sumV + toCentroid + crowdedSumV);
 
 				//デバッグ用（速度の方向をLineRendererで描画
-				/*if(renderer_debug != null && loc_debug != Vector3.zero){
+				if(isLeader)
+				if(renderer_debug != null && loc_debug != Vector3.zero){
 					renderer_debug.SetPosition(0, this.transform.position);
-					renderer_debug.SetPosition(1, this.transform.position + loc_debug);
+					renderer_debug.SetPosition(1, this.transform.position + velocity.normalized);
 					renderer_debug.SetColors(Color.yellow, Color.red);
-				}*/
+				}
 				//////
 
     			return velocity.normalized * VelocityIntensity;

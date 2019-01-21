@@ -33,11 +33,22 @@ namespace Amigyo{
 			}
 			
 			void FixedUpdate(){
+				
+				
 				Vector3 velocity = GetVelocity();
 				transform.rotation = Quaternion.LookRotation(velocity);
 				//rigid.AddForce(velocity*Speed*Time.deltaTime, ForceMode.Acceleration);
 				
 				rigid.velocity = velocity*currentSpeed;
+				
+
+				/*
+				Vector3 accel = GetVelocity() * Time.deltaTime;
+				Vector3 velocity = (rigid.velocity + accel).normalized;
+				transform.rotation = Quaternion.LookRotation(velocity);
+				rigid.velocity = velocity*currentSpeed;
+				*/
+				
 			}
 
 			void Update () {
