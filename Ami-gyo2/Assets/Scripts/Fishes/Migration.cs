@@ -5,10 +5,7 @@ using Amigyo.Spawners;
 
 namespace Amigyo{
 	namespace Fishes{
-		public class Migration : MonoBehaviour, IFishBehavior {
-
-			[Range(0f, 1f)]
-			public float VelocityIntensity = 1f;
+		public class Migration : GroupableScript, IFishBehavior {
 
 			Vector3 AreaCenterPos;
 			float a, b, c;		//楕円の方程式準拠の名前
@@ -16,8 +13,10 @@ namespace Amigyo{
 			float firstRad = -1;
 			bool isBeforeTurning = true;		//周回する前はtrue
 			bool isOutProcess = false;
+			bool isLeader = false;
 
-			void Start () {
+			protected override void Initialize(){
+				isLeader = true;
 
 				var Area = GameManager.Instance.GetComponent<SpawnerHolder>().Area;
 				AreaCenterPos = Area.transform.position;
@@ -25,10 +24,10 @@ namespace Amigyo{
 				a = extents.x*3/4f;
 				b = a*1/2f;
 				c = Mathf.Sqrt(a*a - b*b);
-				
 			}
 
 			public Vector3 GetVelocity(Vector3 currentVelocity){
+				if(!isLeader)	return Vector3.zero;
 				//周回後は干渉しない
 				if(isOutProcess)	return currentVelocity;
 
@@ -59,8 +58,20 @@ namespace Amigyo{
 				}
 
 				//正規化して強度をかけて返す
-				v = v.normalized * VelocityIntensity;
+				v = v.normalized * currentIntensity;
 				return v;
+			}
+
+
+			//抜けるのは楕円状に周回するのが終わった後なので、特に渡す情報はない
+			public override void Die(List<Group> groupScripts, Group nextLeaderScript){
+				if(nextLeaderScript != null)
+					nextLeaderScript.GetComponent<Migration>().InheritLeader();
+			}
+
+			public void InheritLeader(){
+				isLeader = true;
+				isOutProcess = true;
 			}
 		}
 	}
