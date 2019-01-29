@@ -1,11 +1,18 @@
 ﻿using System;
 using System.IO.Ports;
 using UniRx;
+using UnityEngine;
 
 namespace Amigyo.Input
 {
     public sealed class DeviceInputProvider : IInputProvider
     {
+        // 左端に回したときの抵抗値
+        private readonly int leftEdgeValue = 600;
+
+        //  右端に回したときの抵抗値
+        private readonly int rightEdgeValue = 130;
+
         private readonly CompositeDisposable disposable = new CompositeDisposable();
 
         private readonly Subject<float> angleSubject = new Subject<float>();
@@ -72,7 +79,7 @@ namespace Amigyo.Input
                     this.isPressedSubject.OnNext(data.isPressed);
                     this.angleSubject.OnNext(this.ConvertRawValueToAngle(data.angleRawValue));
                 })
-                .AddTo(disposable);
+                .AddTo(this.disposable);
 
             this.serialPort.Open();
             this.canListen = false;
@@ -86,8 +93,11 @@ namespace Amigyo.Input
 
         private float ConvertRawValueToAngle(int rawValue)
         {
-            //  まだ実装しない。
-            return rawValue;
+            //  回しすぎたときに値を範囲内になるように調整する。
+            rawValue = Math.Min(Math.Max(rawValue, this.rightEdgeValue), this.leftEdgeValue);
+
+            var angle = (float)(rawValue - this.rightEdgeValue) / (this.leftEdgeValue  - this.rightEdgeValue) * 180.0f;
+            return angle;
         }
     }
 }
