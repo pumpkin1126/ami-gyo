@@ -96,8 +96,11 @@ namespace Amigyo.Input
             //  回しすぎたときに値を範囲内になるように調整する。
             rawValue = Math.Min(Math.Max(rawValue, this.rightEdgeValue), this.leftEdgeValue);
 
-            var angle = (float)(rawValue - this.rightEdgeValue) / (this.leftEdgeValue  - this.rightEdgeValue) * 180.0f;
-            return angle;
+            //  抵抗値-角度グラフの近似曲線の式で角度を求める。
+            var angle = Math.Log(rawValue / 118.41) / 0.0082f;
+
+            Debug.Log($"生の値: {rawValue}, 角度: {angle}");
+            return (float)angle;
         }
     }
 }
