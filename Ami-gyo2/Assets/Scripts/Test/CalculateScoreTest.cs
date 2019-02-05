@@ -19,7 +19,7 @@ namespace Amigyo{
 			
 			if(gm.RemainingTime < 55 && once){
 				
-				gm.CalculateScore(info);
+				gm.CalculateScore(info, Vector3.zero);
 				once = false;
 			}
 			

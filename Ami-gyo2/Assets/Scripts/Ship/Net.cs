@@ -23,7 +23,7 @@ public class Net : MonoBehaviour {
 		if(Script == null)
 			return;
 
-		GameManager.Instance.CalculateScore(Script.info);
+		GameManager.Instance.CalculateScore(Script.info, collision.contacts[0].point);
 		Destroy(this.gameObject);
 	}
 
