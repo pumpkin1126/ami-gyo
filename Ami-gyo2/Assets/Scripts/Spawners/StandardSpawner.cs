@@ -35,8 +35,6 @@ namespace Amigyo{
 				var collider = area.GetComponent<BoxCollider>();
 				Range = collider.bounds.size;
 
-				Debug.Log("fishElements: "+fishElements.Count);
-
 
 				//生成タイミングは3秒おき（種類ごとにオフセットはランダム）
 

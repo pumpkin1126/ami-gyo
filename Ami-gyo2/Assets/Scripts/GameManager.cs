@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Amigyo.Fishes;
 
 namespace Amigyo{
@@ -9,6 +10,7 @@ namespace Amigyo{
 		public static GameManager Instance = null;
 		
 		public GameParams gameParams;
+		public Canvas canvas;
 
 		public int RemainingTime{ get{return remainingTime;}}
 		public int Score{ get{return score;}}
@@ -39,13 +41,13 @@ namespace Amigyo{
 			remainingTime = (int)(gameParams.TimeLimit - (Time.time - startTime)) + additionalTime;
 		}
 
-		public void CalculateScore(FishInfo info){
+		public void CalculateScore(FishInfo info, Vector3 collidePosition){
 			score += info.Weight;
 			additionalTime += info.BonusSecond;
-
-			//ここにイベント変更処理を記述（EventTypeがNoneならイベントは変更しない）
-
-			Debug.Log("FishInfo\t weight: "+info.Weight+"  time: "+info.BonusSecond+"  event: "+info.EventName);
+			
+			//UI表示
+			var uiPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, collidePosition);
+			canvas.GetComponent<IconCreator>().CreateWeightIcon(uiPosition, info.Weight);
 		}
 	}
 }

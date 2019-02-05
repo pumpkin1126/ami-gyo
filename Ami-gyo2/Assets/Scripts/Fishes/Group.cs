@@ -81,8 +81,6 @@ namespace Amigyo{
 						}
 					}
 
-					Debug.Log("Gathering...");
-
 					//集まったら動き始める
 					if(finishGather){
 						isGathering = false;
