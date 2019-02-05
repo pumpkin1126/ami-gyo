@@ -20,7 +20,7 @@ namespace Amigyo{
 
 			void Update () {
 				//Text score_text = Score_object.GetComponent<Text>();
-				scoreText.text = "Score:" + GameManager.Instance.Score;
+				scoreText.text = "Score:" + score;
 			}
 
 			void OnTriggerEnter2D(Collider2D col2D){
