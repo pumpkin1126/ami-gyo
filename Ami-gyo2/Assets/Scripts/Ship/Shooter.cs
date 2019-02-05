@@ -45,12 +45,17 @@ namespace Amigyo.Ship
             //  コントローラの値をリッスンする。
             this.inputProvider.Listen();
 
-            Disposable.Create(() => this.inputProvider?.Dispose()).AddTo(this);
+            Disposable.Create(() =>
+            {
+                this.inputProvider?.Dispose();
+                this.inputProvider.Dispose();
+            }).AddTo(this);
         }
 
         //  角度が変化したときの処理。
         private void OnAngleChanged(float angle)
         {
+            //  Debug.Log($"ダイヤル回された! {angle}");
             var unityAngle = 90 - angle;
             this.transform.rotation = Quaternion.AngleAxis(unityAngle, new Vector3(0, 1, 0));
         }
@@ -58,6 +63,7 @@ namespace Amigyo.Ship
         //  ボタンが押されたときの処理。
         private void OnButtonPressed()
         {
+            //  Debug.Log("ボタン押された!");
             Instantiate(this.netPrefab, this.transform.position, this.transform.rotation);
         }
     }
