@@ -9,6 +9,7 @@ namespace Amigyo{
 		
 			//public GameObject Time_object = null;
 
+			int time;
 			Text TimerText;
 
 			void Start () {
@@ -16,7 +17,7 @@ namespace Amigyo{
 			}
 
 			void Update () {
-				TimerText.text = "Time:" + GameManager.Instance.RemainingTime;
+				TimerText.text = "Time:" + time;
 			}
 		}
 	}

@@ -15,6 +15,7 @@ namespace Amigyo{
 			gm = GameManager.Instance;
 		}
 		
+		/*
 		void Update () {
 			
 			if(gm.RemainingTime < 55 && once){
@@ -24,5 +25,6 @@ namespace Amigyo{
 			}
 			
 		}
+		*/
 	}
 }
