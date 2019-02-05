@@ -8,6 +8,7 @@ public class Net : MonoBehaviour {
 
 	bool isFirst = true; //1度だけ加速したいのでbool型の変数を使いたい
 	public float Speed = 5;
+	public AudioClip Catch;
 
 	//shooterによって生成された後、1度だけ加速する
 	void FixedUpdate(){
@@ -19,6 +20,7 @@ public class Net : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision){
+		GameManager.Instance.PlaySound(Catch);
 		var Script = collision.gameObject.GetComponent<Fish>();
 		if(Script == null)
 			return;

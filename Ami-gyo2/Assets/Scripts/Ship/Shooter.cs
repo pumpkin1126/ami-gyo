@@ -15,6 +15,7 @@ namespace Amigyo.Ship
     {
         //  Zenjectにfield-injectionさせる。
         private IInputProvider inputProvider;
+        public AudioClip Throw;
 
         [SerializeField]
         private GameObject netPrefab;
@@ -63,7 +64,7 @@ namespace Amigyo.Ship
         //  ボタンが押されたときの処理。
         private void OnButtonPressed()
         {
-            //  Debug.Log("ボタン押された!");
+            GameManager.Instance.PlaySound(Throw);
             Instantiate(this.netPrefab, this.transform.position, this.transform.rotation);
         }
     }
