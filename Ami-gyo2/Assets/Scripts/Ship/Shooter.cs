@@ -63,11 +63,7 @@ namespace Amigyo.Ship
         //  ボタンが押されたときの処理。
         private void OnButtonPressed()
         {
-<<<<<<< Updated upstream
-            //  Debug.Log("ボタン押された!");
-=======
             GetComponent<AudioSource>().Play();
->>>>>>> Stashed changes
             Instantiate(this.netPrefab, this.transform.position, this.transform.rotation);
         }
     }
