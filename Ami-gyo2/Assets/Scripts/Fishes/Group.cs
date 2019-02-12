@@ -34,6 +34,7 @@ namespace Amigyo{
 			bool isGathering = false;
 
 			public LineRenderer renderer_debug;
+			bool isWandering = false;
 
 
 			public void SetUp(List<Group> fishScripts){
@@ -67,6 +68,8 @@ namespace Amigyo{
 					var leaderScript = leaderGroupScript.GetComponent<Fish>();
 					leaderScript.MultipleSpeed(0);
 				});
+
+				if(GetComponent<Wandering>() != null)	isWandering = true;
 			}
 
 			void Update(){
@@ -148,10 +151,10 @@ namespace Amigyo{
 				var velocity = (sumV + toCentroid + crowdedSumV);
 
 				//デバッグ用（速度の方向をLineRendererで描画
-				if(isLeader)
+				
 				if(renderer_debug != null && loc_debug != Vector3.zero){
 					renderer_debug.SetPosition(0, this.transform.position);
-					renderer_debug.SetPosition(1, this.transform.position + velocity.normalized);
+					renderer_debug.SetPosition(1, this.transform.position + crowdedSumV.normalized);
 					renderer_debug.SetColors(Color.yellow, Color.red);
 				}
 				//////

@@ -32,7 +32,6 @@ namespace Amigyo{
 			*/
 		}
 
-
 		/*
 		void Update () {
 			setTime();

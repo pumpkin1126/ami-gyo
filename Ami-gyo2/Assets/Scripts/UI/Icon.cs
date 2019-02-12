@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using TMPro;
 
 public class Icon : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Icon : MonoBehaviour {
 			return score;
 		}
 	}
+
+	public TextMeshProUGUI IconText;
 
 	int score = -1;
 
@@ -27,6 +30,7 @@ public class Icon : MonoBehaviour {
 	public void Initialize(GameObject _waterTank, int _score){
 		waterTank = _waterTank;
 		score = _score;
+		IconText.text = (score + "kg");
 
 
 		rigid = GetComponent<Rigidbody2D>();

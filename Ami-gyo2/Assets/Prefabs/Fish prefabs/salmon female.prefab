@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d08148dc700784f90a7b224e6152ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VelocityIntensity: 1
 --- !u!114 &114552072416369076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -490,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info:
-    weight: 0
+    weight: 4
     bonusSecond: 0
     eventName: 0
     maxAmount: 10

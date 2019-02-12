@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: ScoreText
+    uniqueID: 300022005
+    locked: 0
+  - name: WaterTankImage
+    uniqueID: 1192367831
+    locked: 0
