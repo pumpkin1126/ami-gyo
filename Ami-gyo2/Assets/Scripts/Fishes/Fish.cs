@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using Amigyo.Spawners;
 using System.Linq;
+using UniRx;
+using UniRx.Triggers;
 
 namespace Amigyo{
 	namespace Fishes{
@@ -30,30 +32,22 @@ namespace Amigyo{
 				
 				//配列をListに変換してるだけ
 				behaveList = GetComponents<IFishBehavior>().ToList();
-			}
-			
-			void FixedUpdate(){
-				
-				
-				Vector3 velocity = GetVelocity();
-				transform.rotation = Quaternion.LookRotation(velocity);
-				//rigid.AddForce(velocity*Speed*Time.deltaTime, ForceMode.Acceleration);
-				
-				rigid.velocity = velocity*currentSpeed;
-				
 
-				/*
-				Vector3 accel = GetVelocity() * Time.deltaTime;
-				Vector3 velocity = (rigid.velocity + accel).normalized;
-				transform.rotation = Quaternion.LookRotation(velocity);
-				rigid.velocity = velocity*currentSpeed;
-				*/
-				
-			}
+                //  毎フレームbehaviorListから取得した速度ベクトルを返すストリーム。
+                var behaviorVelocityStream = this.FixedUpdateAsObservable().Select(_ => this.GetVelocity()).Share();
 
-			void Update () {
-				
-			}
+                //  behaviorListから取得した速度を魚に適用する。
+                behaviorVelocityStream.Subscribe(velocity => this.rigid.velocity = velocity * this.currentSpeed).AddTo(this);
+
+                //  4フレーム前の地点からの変位ベクトルを魚の向きとする。
+                this.FixedUpdateAsObservable()
+                    .Select(_ => this.transform.position)
+                    .Buffer(4, 1)
+                    .Select(positions => positions.Last() - positions.First())
+                    .Select(delta => Quaternion.LookRotation(delta.normalized))
+                    .Subscribe(rot => this.transform.rotation = rot)
+                    .AddTo(this);
+            }
 
 			public void SetIdAndDieMethod(int id, Action<int> method){
 				this.id = id;
