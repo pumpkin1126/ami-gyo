@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterTank : MonoBehaviour {
+namespace Amigyo{
+	namespace UI{
+		public class WaterTank : MonoBehaviour {
+		
+			public ScoreUI scoreUI;
 
-	void OnTriggerEnter2D(Collider2D col2D){
+			void OnTriggerEnter2D(Collider2D col2D){
+			
+				scoreUI.OnTriggerEnter2D(col2D);
 
-		//スコア追加
-		//音再生する
-		Destroy(col2D.gameObject);
-
+			}
+		}
 	}
 }

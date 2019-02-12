@@ -7,6 +7,7 @@ namespace Amigyo{
 	namespace Fishes{
 		public class Migration : GroupableScript, IFishBehavior {
 
+			const float DecreasingRate = 4/5f;
 			Vector3 AreaCenterPos;
 			float a, b, c;		//楕円の方程式準拠の名前
 
@@ -19,8 +20,10 @@ namespace Amigyo{
 				isLeader = true;
 
 				var Area = GameManager.Instance.GetComponent<SpawnerHolder>().Area;
-				AreaCenterPos = Area.transform.position;
 				var extents = Area.GetComponent<BoxCollider>().bounds.extents;
+				AreaCenterPos = Area.transform.position + Vector3.forward * extents.z*(1-DecreasingRate);
+				extents *= DecreasingRate;
+
 				a = extents.x*3/4f;
 				b = a*1/2f;
 				c = Mathf.Sqrt(a*a - b*b);
