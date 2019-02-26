@@ -1,5 +1,11 @@
 @startuml Amigyo-class
 
+nameSpace Unity{
+    class ScriptableObject{
+
+    }
+}
+
 namespace Amigyo {
 
     namespace Input {
@@ -25,17 +31,35 @@ namespace Amigyo {
         }
 
         abstract class Spawner{
+            - FishPrefabs : List<GameObject>
+            + SetUp(IReadOnlyList<GameObject>) : void
+            + Activate() : abstract void
+            + Update() : abstract void
+        }
 
+        class SpawnerLinkSettings{
+            + GetSpawnerInfo(EventType) : SpawnerInfo
+        }
+
+        class SpawnerInfo{
+            + FishPrefabs : IReadOnlyList<GameObject>
         }
 
         SpawnerHolder -> Spawner
+        SpawnerHolder -- SpawnerLinkSettings
+        SpawnerLinkSettings - SpawnerInfo
+        Unity.ScriptableObject <|-- SpawnerLinkSettings
+        Unity.ScriptableObject <|-- SpawnerInfo
     }
 
-    namespace Fishs{
+    namespace Fishes{
         class FishInfo{
             + Weight : int
             + BonusTime : int
             + EventName : EventType
+            + MaxAmount : int
+            + isBig     : bool
+            + isGroup   : bool
         }
 
         abstract class Fish{
@@ -51,6 +75,7 @@ namespace Amigyo {
 
     enum EventType{
         None
+        Standard
         MassGeneration
         StrongFish
     }
@@ -82,7 +107,7 @@ namespace Amigyo {
     GameManager --> Amigyo.Spawners.SpawnerHolder : 生成パターン変更
     Amigyo.Ship.Net --> GameManager : 捕獲した魚のデータ
     Amigyo.Input.IInputProvider --> Amigyo.Ship.Shooter : 入力データ
-    Amigyo.Spawners.Spawner --> Amigyo.Fishs.Fish : 生成
-    Amigyo.Fishs.Fish - Amigyo.Fishs.FishInfo
+    Amigyo.Spawners.Spawner --> Amigyo.Fishes.Fish : 生成
+    Amigyo.Fishes.Fish - Amigyo.Fishes.FishInfo
 }
 @enduml
