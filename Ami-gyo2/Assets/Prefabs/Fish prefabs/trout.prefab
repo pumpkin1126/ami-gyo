@@ -455,7 +455,7 @@ MonoBehaviour:
     weight: 2
     bonusSecond: 0
     eventName: 0
-    maxAmount: 1
+    maxAmount: 5
     isBig: 0
   Speed: 6
   Scale: 4
